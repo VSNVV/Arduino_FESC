@@ -33,7 +33,7 @@ void setup() {
 
 void loop() {
   if (antirebote) {
-    delay(100);
+    delay(timeDelay);
     antirebote = false;
   }
   while (digitalRead(PULS_JUGADOR_1) == LOW && digitalRead(PULS_JUGADOR_2) == LOW); //Generamos una espera activa hasta que pulsemos alguno de los dos pulsadores
