@@ -1,6 +1,6 @@
 //Ejercicio 2
 
-#include <TM1637Display.h>  //Imoprtamos la libreria del display
+#include <TM1637Display.h>  //Importamos la libreria del display
 
 #define CLK 2  //Definimos que la señal de reloj está conectada al pin 2 del arduino
 #define DIO 3  //Definimos que la señal de intercambio de datos está conectada al pin 3 del arduino
@@ -61,11 +61,11 @@ void displayInicial() {
   const uint8_t SEG_J1J2[] = {
     SEG_B | SEG_C | SEG_D,                  // J
     display.encodeDigit(1),                 // 1
-    SEG_B | SEG_C | SEG_D,                  // P
+    SEG_B | SEG_C | SEG_D,                  // J
     display.encodeDigit(2)                  // 2
   };
 
-  display.setSegments(SEG_P1P2);            //Aplicamos los segmentos anteriores al display
+  display.setSegments(SEG_J1J2);            //Aplicamos los segmentos anteriores al display
 }
 
 //Funcion para mostrar la puntuacion de cada jugador en el display
