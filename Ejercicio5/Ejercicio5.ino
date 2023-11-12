@@ -33,8 +33,6 @@ void loop() {
   imprimeResultado(distancia); //Imprimimos el resultado en el display
   //Una vez que la distancia es visible, encenderemos los leds en funcion de la distancia que dé
   enciendeLeds(distancia);
-
-
 }
 
 //Función para mostrar el resultado en el display
