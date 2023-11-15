@@ -51,7 +51,6 @@ void loop() {
     else{
       Serial.println("Error escribiendo");
     }
-    delay(delayTime);
   }
 
   //Una vez que hemos escrito, leemos el contenido
