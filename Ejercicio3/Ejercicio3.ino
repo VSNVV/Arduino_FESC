@@ -1,7 +1,7 @@
 //Ejercicio 3
 
 //Librerias necesarias
-#include <dht11.h>          //Librería del sensor de temperatura y humedad
+#include <DHT11.h>          //Librería del sensor de temperatura y humedad
 #include <TM1637Display.h>  //Librería del display
 
 //Variables globales
@@ -12,25 +12,31 @@
 #define pinLedRojo 5
 #define pinLedVerde 6
 
-dht11 DHT11; //Creamos la instancia del sensor de temperatura y humedad
+DHT11 dht11(pinDHT11); //Creamos la instancia del sensor de temperatura y humedad
 
 TM1637Display display(CLK, DIO); //Creamos la instancia del display
 
 void setup() {
   display.setBrightness(brilloDisplay); //Indicamos el nivel del brillo al display
-  DHT11.attach(pinDHT11); //Indicamos que el sensor está conectado al pin 2 del arudino
+  //dht11.attach(pinDHT11); //Indicamos que el sensor está conectado al pin 2 del arudino
   Serial.begin(9600); //Inicializamos el monitor serie
   displayInicial(); //Inicializampos el display
+  pinMode(pinLedRojo, OUTPUT); //Indicamos que el pin del led rojo es una salida
+  pinMode(pinLedVerde, OUTPUT); //Indicamos que el pin del led verde es una salida
+  delay(1000);
 
 }
 
 void loop() {
   //Lo primero que haremos es leer el sensor DHT11 y almacenar los datos
-  int temperatura = DHT11.readTemperature(); //Leemos la temperatura del sensor
-  int humedad = DHT11.readHumidity(); //Leemos la humedad del sensor
+  int temperatura = dht11.readTemperature(); //Leemos la temperatura del sensor
+  int humedad = dht11.readHumidity(); //Leemos la humedad del sensor
 
   //Ahora imprimiremos los resultados en el monitor serie
-  Serial.print("Temperatura --> " + temperatura + "\nHumedad --> " + humedad + "\n");
+  Serial.print("Temperatura --> ");
+  Serial.println(temperatura);
+  Serial.print("Humedad --> ");
+  Serial.println(humedad);
 
   //Una vez hemos leido ambas magnitudes, imprimos los valores en el displayl
   imprimeResultados(temperatura, humedad);
@@ -47,12 +53,13 @@ void displayInicial() {
   HU --> Humedad
   */
   display.setBrightness(brilloDisplay);
-  const uint8_t SEG_J1J2[] = {
+  const uint8_t SEG_INIT[] = {
     SEG_A | SEG_B | SEG_F | SEG_G,                 // º
     SEG_A | SEG_F | SEG_E | SEG_D,                 // C
     SEG_F | SEG_B | SEG_E | SEG_C | SEG_G,         // H
     SEG_F | SEG_E | SEG_D | SEG_C | SEG_B          // U
   };
+  display.setSegments(SEG_INIT);
 }
 
 //Función para mostrar los resultados en el display

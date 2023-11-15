@@ -4,16 +4,22 @@
 
 File fichero;
 int ultimaPosicion = 0;
-#define timeDelay 1000
 
 #define CS 4
 #define SCK 13
-#define MOSI 7
+#define MOSI 11
 #define MISO 12
 
 #define distanciaMaxima 200
 #define triggerPin 8
-#define echoPin 7
+#define echoPin 9
+
+int led1 = 2;
+int led2 = 3;
+int led3 = 5;
+int led4 = 6;
+
+int delayTime = 1000;
 
 NewPing sonar(triggerPin, echoPin, distanciaMaxima);
 
@@ -33,12 +39,11 @@ void setup() {
 
 void loop() {
   for(int i = 0; i < 10; i++){
-    fichero = SD.open("Leds.txt", FILE_WRITE);
+    fichero = SD.open("test.txt", FILE_WRITE);
     long dist = sonar.ping_cm(); //Medimos la distancia del ultrasonido en cm
     enciendeLeds(dist);
     if(fichero){
-      Serial.print("Escribiendo...");
-      Serial.print("Escribiendo en SD...");
+      Serial.print("Escribiendo en SD... -> ");
       fichero.println(dist);
       fichero.close();
       Serial.println(dist);
@@ -46,11 +51,11 @@ void loop() {
     else{
       Serial.println("Error escribiendo");
     }
-    delay(timeDelay);
+    delay(delayTime);
   }
 
   //Una vez que hemos escrito, leemos el contenido
-  fichero = SD.open("Leds.txt"); //Abrimos el archivo Leds.txt
+  fichero = SD.open("test.txt"); //Abrimos el archivo Leds.txt
 
  int bytesTotales = fichero.size();
   String cadena = "";
@@ -76,27 +81,32 @@ void loop() {
 }
 
 void enciendeLeds(long dist){
-  int ledsApagados = 0;
-  if((dist) < 20){
+  if(dist < 20){
     //Se encienden los 4 leds
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
-    digitalWrite(5, HIGH);
-    digitalWrite(6, HIGH);
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
+    digitalWrite(led3, HIGH);
+    digitalWrite(led4, HIGH);
   }
-  else if(20 < (dist) < 30){
+  else if(dist < 30){
     //Se encienden 3 leds
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
-    digitalWrite(5, HIGH);
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
+    digitalWrite(led3, HIGH);
   }
-  else if(30 < (dist) < 40){
+  else if(dist < 40){
     //Se encienden 2 leds
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
   }
   else{
     //Se enciende 1 led
-    digitalWrite(2, HIGH);
+    digitalWrite(led1, HIGH);
   }
+  delay(delayTime);
+  digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,LOW);
+  digitalWrite(led4,LOW);
+  
 }

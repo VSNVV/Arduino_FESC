@@ -57,7 +57,7 @@ void loop() {
 //Función para poner una "pantalla de inicio"
 void displayInicial() {
   display.setBrightness(0x0f);
-  imprimePuntuaciones();
+  imrpimePuntuaciones();
   const uint8_t SEG_J1J2[] = {
     SEG_B | SEG_C | SEG_D,                  // J
     display.encodeDigit(1),                 // 1
@@ -70,7 +70,7 @@ void displayInicial() {
 
 //Funcion para mostrar la puntuacion de cada jugador en el display
 void displayScores() {
-  printScores();
+  imrpimePuntuaciones();
   const uint8_t SEG_PUNTOS[] = {
     display.encodeDigit(puntosJugador1 / 10),
     display.encodeDigit(puntosJugador1 % 10),

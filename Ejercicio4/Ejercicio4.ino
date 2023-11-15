@@ -8,13 +8,15 @@ int voltajeLed = 0; //Voltaje de salida al led
 
 void setup() {
 	Serial.begin(9600); //Inicializamos el monitor serie
+  pinMode(pinLed, OUTPUT);
 }
 
 void loop() {
 	voltaje = analogRead(pinPotenciometro); //Leemos el valor del potenciometro
   Serial.println("Voltaje leido: " + voltaje); //Imprimimos el voltaje leido del potenciometro en el monitor serie
-  voltajeLed = map(voltage, 0, 1023, 0, 255); //Voltaje del led mapeado 0-1023 -> 0-255
-  Serial.print("Voltaje mapeado: " + voltajeLed); //Imprimimos el voltaje mapeado en el monitor serie
+  voltajeLed = map(voltaje, 0, 1023, 0, 255); //Voltaje del led mapeado 0-1023 -> 0-255
+  Serial.print("Voltaje mapeado --> "); //Imprimimos el voltaje mapeado en el monitor serie
+  Serial.println(voltaje);
 	analogWrite(pinLed, voltajeLed); //Aplicamos el voltaje mapeado al led mediante la salida analógica
   delay(100); //Añadimos un pequeño delay para que el programa no se vuelva muy loco
 }
